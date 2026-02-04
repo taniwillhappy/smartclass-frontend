@@ -248,11 +248,12 @@ const editProfile = ref({
 const sortBy = ref('numberAsc')
 
   
-const token = localStorage.getItem('token')
-
-const getHeaders = () => ({
-  Authorization: `Bearer ${localStorage.getItem('token')}`
-})
+const getHeaders = () => {
+  const token = localStorage.getItem('token')
+  return {
+    Authorization: `Bearer ${token}`
+  }
+}
 
 /* ---------- auth ---------- */
 const logout = () => {
@@ -315,7 +316,7 @@ const addStudent = async () => {
   await axios.post(
     'https://smartclass-backend-xjoa.onrender.com/api/students',
     newStudent.value,
-    { headers }
+    { headers: getHeaders }
   )
 
   newStudent.value = {
@@ -347,7 +348,7 @@ const saveEdit = async (student) => {
       level: student.level,
       department: student.department
     },
-    { headers }
+    { headers: getHeaders }
   )
 
   editingId.value = null
@@ -360,7 +361,7 @@ const removeStudent = async (id) => {
 
   await axios.delete(
     `https://smartclass-backend-xjoa.onrender.com/api/students/${id}`,
-    { headers }
+    { headers: getHeaders }
   )
 
   students.value = students.value.filter(s => s.id !== id)
@@ -443,7 +444,7 @@ const saveProfile = async () => {
       fullname: editProfile.value.fullname,
       password: editProfile.value.password || undefined
     },
-    { headers }
+    { headers: getHeaders }
   )
 
   alert('แก้ไขข้อมูลเรียบร้อย กรุณาเข้าสู่ระบบใหม่')
