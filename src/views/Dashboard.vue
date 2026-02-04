@@ -316,7 +316,7 @@ const addStudent = async () => {
   await axios.post(
     'https://smartclass-backend-xjoa.onrender.com/api/students',
     newStudent.value,
-    { headers: getHeaders }
+    { headers: getHeaders() }
   )
 
   newStudent.value = {
@@ -348,7 +348,7 @@ const saveEdit = async (student) => {
       level: student.level,
       department: student.department
     },
-    { headers: getHeaders }
+    { headers: getHeaders() }
   )
 
   editingId.value = null
@@ -361,7 +361,7 @@ const removeStudent = async (id) => {
 
   await axios.delete(
     `https://smartclass-backend-xjoa.onrender.com/api/students/${id}`,
-    { headers: getHeaders }
+    { headers: getHeaders() }
   )
 
   students.value = students.value.filter(s => s.id !== id)
@@ -444,7 +444,7 @@ const saveProfile = async () => {
       fullname: editProfile.value.fullname,
       password: editProfile.value.password || undefined
     },
-    { headers: getHeaders }
+    { headers: getHeaders() }
   )
 
   alert('แก้ไขข้อมูลเรียบร้อย กรุณาเข้าสู่ระบบใหม่')
