@@ -280,8 +280,12 @@ onMounted(async () => {
     user.value = res.data.user
 
     await loadStudents() 
-  } catch {
+  } catch (err) {
+  if (err.response?.status === 401) {
     logout()
+  } else {
+    console.error(err)
+    alert('โหลดข้อมูลไม่สำเร็จ')
   }
 })
 
