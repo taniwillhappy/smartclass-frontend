@@ -277,7 +277,7 @@ onMounted(async () => {
       'https://smartclass-backend-xjoa.onrender.com/api/auth/dashboard',
       { headers: getHeaders() }
     )
-    user.value = res.data.user
+    user.value = res.data.user || res.data
 
     await loadStudents() 
   } catch (err) {
