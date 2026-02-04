@@ -213,7 +213,7 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 const router = useRouter()
-const token = localStorage.getItem('token')
+
 
 const user = ref(null)
 const students = ref([])
@@ -247,11 +247,12 @@ const editProfile = ref({
 
 const sortBy = ref('numberAsc')
 
+  
+const token = localStorage.getItem('token')
 
-
-const headers = {
-  Authorization: `Bearer ${token}`
-}
+const getHeaders = () => ({
+  Authorization: `Bearer ${localStorage.getItem('token')}`
+})
 
 /* ---------- auth ---------- */
 const logout = () => {
@@ -263,7 +264,7 @@ const logout = () => {
 const loadStudents = async () => {
   const res = await axios.get(
     'https://smartclass-backend-xjoa.onrender.com/api/students',
-    { headers }
+    { headers: getHeaders() }
   )
   students.value = res.data
 }
@@ -274,7 +275,7 @@ onMounted(async () => {
   try {
     const res = await axios.get(
       'https://smartclass-backend-xjoa.onrender.com/api/auth/dashboard',
-      { headers }
+      { headers: getHeaders() }
     )
     user.value = res.data.user
 
