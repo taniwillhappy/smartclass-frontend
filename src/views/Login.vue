@@ -38,7 +38,7 @@ const login = async () => {
       }
     )
 
-    localStorage.setItem('token', res.data.token)
+    localStorage.setItem("token", res.data.token);
     router.push('/dashboard')
   } catch (err) {
     error.value = 'Username หรือ Password ไม่ถูกต้อง'
