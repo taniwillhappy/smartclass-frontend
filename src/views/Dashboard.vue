@@ -270,6 +270,7 @@ const loadStudents = async () => {
 }
 
 onMounted(async () => {
+  const token = localStorage.getItem('token')
   if (!token) return logout()
 
   try {
@@ -277,17 +278,20 @@ onMounted(async () => {
       'https://smartclass-backend-xjoa.onrender.com/api/auth/dashboard',
       { headers: getHeaders() }
     )
-    user.value = res.data.user || res.data
 
-    await loadStudents() 
+    user.value = res.data.user || res.data
+    await loadStudents()
+
   } catch (err) {
-  if (err.response?.status === 401) {
-    logout()
-  } else {
-    console.error(err)
-    alert('โหลดข้อมูลไม่สำเร็จ')
+    if (err.response?.status === 401) {
+      logout()
+    } else {
+      console.error(err)
+      alert('ไม่สามารถโหลดข้อมูลได้')
+    }
   }
 })
+
 
 
 /* ---------- add ---------- */
